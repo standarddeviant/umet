@@ -1,0 +1,48 @@
+
+syntax = "proto3";
+
+enum ConnectionStatus {
+    Invalid = 0;
+    PreInit = 1;
+    EstablishInit = 2;
+    PostInit = 3;
+    Connecting = 4;
+    Connected = 5;
+    Disconnecting = 6;
+    Disconnected = 7;
+}
+
+message BleGattChannel {
+    ConnectionStatus status = 1;
+    // TODO - what else goes in here
+    repeated uint64 svc_uuid = 2; // 
+    repeated uint64 char_uuid = 3; // 
+}
+
+message SerialChannel {
+    ConnectionStatus status = 1;
+    uint32 tag = 2;
+    string port = 3; // 
+    uint32 baudrate = 4;
+}
+
+message TcpChannel {
+    ConnectionStatus status = 1;
+    uint32 tag = 2;
+    string ip = 3; // 
+    uint32 port = 4;
+}
+
+message UdpChannel {
+    ConnectionStatus status = 1;
+    string ip = 2; // 
+    uint32 port = 3;
+}
+
+message Channel {
+    string name = 1;
+    optional BleGattChannel ble = 2;
+    optional SerialChannel serial = 3;
+    optional TcpChannel tcp = 4;
+    optional UdpChannel udp = 5;
+}
